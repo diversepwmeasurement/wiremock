@@ -1,20 +1,16 @@
-name: Release Drafter
-
-on:
-  push:
-    branches:
-      - main
-      - master
-  workflow_dispatch:
-
 jobs:
   update_release_draft:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
-      - uses: release-drafter/release-drafter@v5
-        with:
-          name: next
-          tag: next
-          version: next
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - continue-on-error: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      uses: release-drafter/release-drafter@v5
+      with:
+        name: next
+        tag: next
+        version: next
+name: Release Drafter
+on:
+  repository_dispatch:
+    types: trigger-ga___changelog-draft.yml
